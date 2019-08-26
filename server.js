@@ -3,10 +3,6 @@ var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 require('dotenv').config();
 
-// Our scraping tools
-var axios = require('axios');
-var cheerio = require('cheerio');
-
 // Require all models
 var db = require('./models');
 
@@ -40,7 +36,8 @@ var psw = process.env.DB_PSW;
 var MONGODB_URI =
    process.env.MONGODB_URI ||
    `mongodb+srv://${user}:${psw}@webscrapeapp-hoapb.mongodb.net/test?retryWrites=true&w=majority`;
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+   .catch(error => handleError(error));
 
 
 // Start the server
@@ -51,5 +48,3 @@ app.listen(PORT, function() {
       PORT
    );
 });
-
-// module.exports = app;
