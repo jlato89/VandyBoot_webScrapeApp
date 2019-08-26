@@ -35,7 +35,7 @@ var user = process.env.DB_USER;
 var psw = process.env.DB_PSW;
 var MONGODB_URI =
    process.env.MONGODB_URI ||
-   `mongodb+srv://${user}:${psw}@webscrapeapp-hoapb.mongodb.net/test?retryWrites=true&w=majority`;
+   `mongodb+srv://${user}:${psw}@webscrapeapp-hoapb.mongodb.net/webscraping?retryWrites=true&w=majority`;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
    .catch(error => handleError(error));
 
