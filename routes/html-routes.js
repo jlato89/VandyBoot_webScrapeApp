@@ -29,31 +29,18 @@ module.exports = function(app) {
                .find('.entry-content')
                .text();
 
-               // console.log(result);
+            // console.log(result);
 
-            // Insert into DB
-            db.Article.find({
-               link: result.link
-            },
-            function(err, res) {
-               if (err) throw err;
-               // Check if there is a duplicate in DB
-               if (res) {
-                  // If duplicate found, DO NOT add to DB
-                  console.log('duplicate found, do not create again');
-               } else {
-                  // If no duplicate was found, then add to DB
-                  db.Article.create(result)
-                     .then((dbArticle) => {
-                        console.log(dbArticle);
-                     })
-                     .catch((err) => {
-                        console.log(err);
-                     });
-               }
-            });
+            // Update article if exists, create otherwise
+               db.Article.updateOne(result, result, {upsert: true})
+                  .then((dbArticle) => {
+                     console.log(dbArticle);
+                  })
+                  .catch((err) => {
+                     console.log(err);
+                  });
 
-            // Limit results
+            // Limit new results
             return i<2
          });
       });
