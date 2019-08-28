@@ -31,17 +31,31 @@ module.exports = function(app) {
 
             // console.log(result);
 
-            // Update article if exists, create otherwise
-               db.Article.updateOne(result, result, {upsert: true})
-                  .then((dbArticle) => {
-                     console.log(dbArticle);
-                  })
-                  .catch((err) => {
-                     console.log(err);
-                  });
-
+            db.Article.findOne(
+               {
+                  title: result.title
+               },
+               function(err, res) {
+                  if (err) throw err;
+                  // Check if there is a duplicate in DB
+                  if (res) {
+                     // If duplicate found, DO NOT add to DB
+                     console.log('duplicate found, do not create again');
+                  } else {
+                     // If no duplicate was found, then add to DB
+                     db.Article.create(result)
+                        .then(dbArticle => {
+                           // console.log(dbArticle);
+                           console.log('Document Created!');
+                        })
+                        .catch(err => {
+                           console.log(err);
+                        });
+                  }
+               }
+            );   
             // Limit new results
-            return i<2
+            return i<4
          });
       });
    });
