@@ -5,14 +5,21 @@ const cheerio = require('cheerio');
 
 
 module.exports = function(app) {
+
    // Homepage
-   app.get('/', function(req, res) {
+   app.get('/', (req, res) => {
+      res.render('index');
+   });
+
+
+   // Scrape
+   app.get('/scrape', (req, res) => {
       axios.get('https://vrscout.com/news/').then(function(response) {
          const $ = cheerio.load(response.data);
 
-         var result = {};
-
          $('.vce-post').each((i, el) => {
+            var result = {};
+
             // Scrape data from website
             result.title = $(el)
                .find('.entry-title')
@@ -29,7 +36,8 @@ module.exports = function(app) {
                .find('.entry-content')
                .text();
 
-            // console.log(result);
+            // console.log('raw Results: ',result.title);
+            // console.log('-----------------');
 
             db.Article.findOne(
                {
@@ -37,16 +45,17 @@ module.exports = function(app) {
                },
                function(err, res) {
                   if (err) throw err;
+                  // console.log('res: ',res);
+
                   // Check if there is a duplicate in DB
-                  if (res) {
+                  if (res != null) {
                      // If duplicate found, DO NOT add to DB
-                     console.log('duplicate found, do not create again');
+                     console.log('duplicate found, do not create document again');
                   } else {
                      // If no duplicate was found, then add to DB
                      db.Article.create(result)
                         .then(dbArticle => {
-                           // console.log(dbArticle);
-                           console.log('Document Created!');
+                           console.log('Document Created! ->', dbArticle.title);
                         })
                         .catch(err => {
                            console.log(err);
@@ -55,7 +64,7 @@ module.exports = function(app) {
                }
             );   
             // Limit new results
-            return i<4
+            return i<2
          });
       });
    });
