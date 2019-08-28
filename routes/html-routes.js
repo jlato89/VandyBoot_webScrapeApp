@@ -8,7 +8,16 @@ module.exports = function(app) {
 
    // Homepage
    app.get('/', (req, res) => {
-      res.render('index');
+      db.Article.find({})
+         .then(function(dbArticle) {
+            console.log(dbArticle);
+            res.render('index', {
+               article: dbArticle
+            });
+         })
+         .catch(function(err) {
+            res.json(err);
+         });
    });
 
 
