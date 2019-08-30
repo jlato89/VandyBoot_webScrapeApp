@@ -9,8 +9,9 @@ module.exports = function(app) {
    // Homepage
    app.get('/', (req, res) => {
       db.Article.find({})
+         .sort({ date:-1 })
          .then(function(dbArticle) {
-            console.log(dbArticle);
+            // console.log(dbArticle);
             res.render('index', {
                article: dbArticle
             });
