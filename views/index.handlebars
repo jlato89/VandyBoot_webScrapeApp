@@ -1,9 +1,20 @@
 <h1>Recent VR News</h1>
 
 {{#each article}}
-<h3>{{title}}</h3>
-<a href="{{link}}">Link to article</a>
-<p>{{summary}}</p>
+   <h3>{{title}}</h3>
+   <a href="{{link}}">Link to article</a>
+   <p>{{summary}}</p>
+   <i>{{date}}</i>
+<div class="comment-box">
+   <p><a href="/article/{{_id}}">Show all comments</a></p>
+   {{#if comment}}
+      {{#each comment}}
+         <p>{{comment}}</p>
+         <i>{{commenter}} | {{date}}</i>
+      {{/each}}
+   {{else}}
+      <p>No Comments...</p>
+      <i>commenter | date</i>
+   {{/if}}
+</div>
 {{/each}}
-<br>
-<p>{{comments}}</p>
