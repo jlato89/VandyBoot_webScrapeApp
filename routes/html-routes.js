@@ -6,23 +6,67 @@ const cheerio = require('cheerio');
 
 module.exports = function(app) {
 
-   // Homepage
+   //* Homepage
    app.get('/', (req, res) => {
+      // Find all articles in DB
       db.Article.find({})
+         // sort by date
          .sort({ date:-1 })
+         // Then render to page
          .then(function(dbArticle) {
-            // console.log(dbArticle);
             res.render('index', {
                article: dbArticle
             });
          })
+         // Catch any errors and display them
          .catch(function(err) {
             res.json(err);
          });
    });
 
 
-   // Scrape
+   //* Article profile
+   app.get('/article/:id', function(req, res) {
+      db.Article.findOne({ _id: req.params.id })
+         // populate all comments associated with it
+         .populate('comment')
+         // If article is found, display it
+         .then(function(dbArticle) {
+            res.render('article', {
+               article: dbArticle
+            });
+         })
+         .catch(function(err) {
+            // If error occurs, send to client
+            res.json(err);
+         });
+   });
+
+   //* Article comment save
+   app.post('/article/:id', function(req, res) {
+      // Create a new note and pass the req.body to the entry
+      db.Note.create(req.body)
+         .then(function(dbNote) {
+            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+            return db.Article.findOneAndUpdate(
+               { _id: req.params.id },
+               { note: dbNote._id },
+               { new: true }
+            );
+         })
+         .then(function(dbArticle) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json(dbArticle);
+         })
+         .catch(function(err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+         });
+   });
+
+   //* Scrape
    app.get('/scrape', (req, res) => {
       axios.get('https://vrscout.com/news/').then(function(response) {
          const $ = cheerio.load(response.data);
@@ -76,6 +120,7 @@ module.exports = function(app) {
             // Limit new results
             return i<2
          });
+         res.send('Scrape Complete');
       });
    });
 }
