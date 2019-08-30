@@ -1,7 +1,9 @@
-<h1>{{article.title}}</h1>
-<a href="{{article.link}}">Link to article</a>
-<p>{{article.summary}}</p>
-<i>{{article.date}}</i>
+<h1>{{title}}</h1>
+<img src="{{image}}" alt="article image">
+<p><a href="{{link}}">Link to article</a></p>
+<p>{{summary}}</p>
+<i>{{date}}</i>
+<hr>
 <div class="comment-box">
    <form>
       <textarea name="form-comment" id="form-comment" cols="30" rows="5" placeholder="your comment"></textarea>
@@ -12,11 +14,10 @@
    </form>
    {{#if comment}}
       {{#each comment}}
-         <p>{{comment.comment}}</p>
-         <i>{{comment.commenter}} | {{comment.date}}</i>
+         <p>{{body}}</p>
+         <i>{{commenter}} | {{date}}</i>
       {{/each}}
    {{else}}
       <p>No Comments...</p>
-      <i>commenter | date</i>
    {{/if}}
 </div>
