@@ -28,9 +28,9 @@ app.set("views", "./views");
 
 // Define routes
 // require('./routes/html-routes.js')(app);
-var routes = require('./controllers/articlesController.js');
-var routes = require('./controllers/commentsController.js');
-app.use(routes);
+var articleRoutes = require('./controllers/articlesController.js');
+var commentRoutes = require('./controllers/commentsController.js');
+app.use(articleRoutes, commentRoutes);
 
 // Connect to the Mongo DB
 var user = process.env.DB_USER;
