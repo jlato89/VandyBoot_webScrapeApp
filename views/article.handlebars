@@ -1,0 +1,22 @@
+<h1>{{article.title}}</h1>
+<a href="{{article.link}}">Link to article</a>
+<p>{{article.summary}}</p>
+<i>{{article.date}}</i>
+<div class="comment-box">
+   <form>
+      <textarea name="form-comment" id="form-comment" cols="30" rows="5" placeholder="your comment"></textarea>
+      <br>
+      <input type="text" name="form-name" id="form-name" placeholder="Your Name">
+      <br>
+      <input type="submit" value="Submit Comment">
+   </form>
+   {{#if comment}}
+      {{#each comment}}
+         <p>{{comment.comment}}</p>
+         <i>{{comment.commenter}} | {{comment.date}}</i>
+      {{/each}}
+   {{else}}
+      <p>No Comments...</p>
+      <i>commenter | date</i>
+   {{/if}}
+</div>
