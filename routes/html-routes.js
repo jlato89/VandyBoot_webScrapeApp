@@ -32,9 +32,8 @@ module.exports = function(app) {
          .populate('comment')
          // If article is found, display it
          .then(function(dbArticle) {
-            res.render('article', {
-               article: dbArticle
-            });
+            console.log(dbArticle.comment);
+            res.render('article', dbArticle);
          })
          .catch(function(err) {
             // If error occurs, send to client
@@ -44,15 +43,16 @@ module.exports = function(app) {
 
    //* Article comment save
    app.post('/article/:id', function(req, res) {
-      // Create a new note and pass the req.body to the entry
-      db.Note.create(req.body)
-         .then(function(dbNote) {
+      db.Comment.create(req.body)
+         .then(function(dbComment) {
             // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
             // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
             // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
             return db.Article.findOneAndUpdate(
                { _id: req.params.id },
-               { note: dbNote._id },
+               { $push:
+                  {comment: dbComment._id }
+               },
                { new: true }
             );
          })
@@ -89,6 +89,9 @@ module.exports = function(app) {
             result.summary = $(el)
                .find('.entry-content')
                .text();
+            result.image = $(el)
+               .find('.meta-image a img')
+               .attr('src')
 
             // console.log('raw Results: ',result.title);
             // console.log('-----------------');
