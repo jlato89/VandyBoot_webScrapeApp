@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 require('dotenv').config();
 
 // Require all models
-var db = require('./models');
+// var db = require('./models');
 
 // Assign port to server
 var PORT = process.env.PORT || 8080;
@@ -27,10 +27,12 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 // Define routes
-require('./routes/html-routes.js')(app);
+// require('./routes/html-routes.js')(app);
+var routes = require('./controllers/articlesController.js');
+var routes = require('./controllers/commentsController.js');
+app.use(routes);
 
 // Connect to the Mongo DB
-
 var user = process.env.DB_USER;
 var psw = process.env.DB_PSW;
 var MONGODB_URI =
