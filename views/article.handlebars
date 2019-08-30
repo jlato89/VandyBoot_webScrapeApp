@@ -6,11 +6,11 @@
 <hr>
 <div class="comment-box">
    <form>
-      <textarea name="form-comment" id="form-comment" cols="30" rows="5" placeholder="your comment"></textarea>
+      <textarea name="form-body" id="form-body" cols="30" rows="5" placeholder="your comment"></textarea>
       <br>
       <input type="text" name="form-name" id="form-name" placeholder="Your Name">
       <br>
-      <input type="submit" value="Submit Comment">
+      <input type="submit" id="form-submit" value="Submit Comment" data-id="{{_id}}">
    </form>
    {{#if comment}}
       {{#each comment}}
