@@ -44,7 +44,7 @@ router.get('/article/:id', (req, res) => {
 });
 
 //* Article Scrape Route
-router.get('/article/scrape', (req, res) => {
+router.get('/scrape', (req, res) => {
    axios.get('https://vrscout.com/news/').then((response) => {
       const $ = cheerio.load(response.data);
 
