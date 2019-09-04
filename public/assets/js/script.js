@@ -1,3 +1,15 @@
+//* Refresh Article list
+$('#refresh-articles').on('click', function() {
+   // Do a POST method and pass the data to the route
+   $.ajax({
+      method: 'GET',
+      url: '/scrape',
+   })
+   .then(() => {
+      window.location.href = '/';
+   });
+});
+
 //* Submit comment to DB
 $('#form-submit').on('click', function() {
    // Grab the ID of the article your currently on
