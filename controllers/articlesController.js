@@ -6,6 +6,10 @@ const router = express.Router();
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+var moment = require('moment');
+moment().format('dddd, MMMM Do YYYY');
+
+
 // Import model to use its database functions.
 var article = require('../models/Article.js');
 
@@ -35,6 +39,7 @@ router.get('/article/:id', (req, res) => {
       .populate('comment')
       // If article is found, display it
       .then((article) => {
+         console.log(article.date);
          res.render('article', article);
       })
       .catch((err) => {

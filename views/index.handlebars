@@ -3,8 +3,9 @@
 <div class="article">
 {{#each articles}}
    <h3>{{title}}</h3>
-   <a href="{{link}}">Link to article</a>
+   <a href="{{link}}">Link to source</a>
    <p>{{summary}}</p>
+   <a href="/article/{{_id}}">Show comments</a>
    <i>{{date}}</i>
 {{/each}}
 </div>

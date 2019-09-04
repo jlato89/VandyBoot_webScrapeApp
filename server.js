@@ -1,6 +1,8 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
+var moment = require('moment');
+moment().format('dddd, MMMM Do YYYY');
 require('dotenv').config();
 
 // Require all models
