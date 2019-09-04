@@ -7,7 +7,7 @@ var comment = require('../models/Comment.js');
 var article = require('../models/Article.js');
 
 //* ADD Comment to article
-router.post('/article/:id', function(req, res) {
+router.post('/article/:id', (req, res) => {
    comment.create(req.body)
       .then(function(dbComment) {
          // If a Comment was created successfully, find a Article with a _id equal to req.params.id, Then update the Article to be associated with the new Comment
@@ -17,25 +17,25 @@ router.post('/article/:id', function(req, res) {
             { new: true }
          );
       })
-      .then(function(dbArticle) {
+      .then((dbArticle) => {
          // If the Article was updated successfully, then pass json to user.
          res.json(dbArticle);
       })
-      .catch(function(err) {
+      .catch((err) => {
          res.json(err);
       });
 });
 
 //* DELETE Comment from article
-router.delete('/delete/:id', function(req, res) {
+router.delete('/delete/:id', (req, res) => {
    comment.deleteOne(
       {
          _id: req.params.id
       })
-      .then(function() {
+      .then(() => {
          res.deletedCount;
       })
-      .catch(function(err) {
+      .catch((err) => {
          res.json(err);
       });
 });
