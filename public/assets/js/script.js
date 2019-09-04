@@ -1,8 +1,9 @@
+//* Submit comment to DB
 $('#form-submit').on('click', function() {
-   // grab the id of the article your currently on
+   // Grab the ID of the article your currently on
    const thisId = $(this).attr('data-id');
 
-   // Do a post passing the data entered into the form
+   // Do a POST method and pass the data to the route
    $.ajax({
       method: 'POST',
       url: '/article/'+thisId,
@@ -10,5 +11,17 @@ $('#form-submit').on('click', function() {
          body: $('#form-body').val(),
          commenter: $('#form-name').val()
       }
+   });
+});
+
+//* Delete comment from DB
+$('.comment-delete').on('click', function() {
+   // Grab the ID of the comment
+   const thisId = $(this).attr('data-id');
+
+   // DO a DELETE method with the id added at the end of the url
+   $.ajax({
+      method: 'DELETE',
+      url: '/delete/'+thisId,
    });
 });
