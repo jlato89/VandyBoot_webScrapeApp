@@ -6,7 +6,7 @@ const router = express.Router();
 var comment = require('../models/Comment.js');
 var article = require('../models/Article.js');
 
-//* Save Comment ref to article
+//* ADD Comment to article
 router.post('/article/:id', function(req, res) {
    comment.create(req.body)
       .then(function(dbComment) {
@@ -20,6 +20,20 @@ router.post('/article/:id', function(req, res) {
       .then(function(dbArticle) {
          // If the Article was updated successfully, then pass json to user.
          res.json(dbArticle);
+      })
+      .catch(function(err) {
+         res.json(err);
+      });
+});
+
+//* DELETE Comment from article
+router.delete('/delete/:id', function(req, res) {
+   comment.deleteOne(
+      {
+         _id: req.params.id
+      })
+      .then(function() {
+         res.deletedCount;
       })
       .catch(function(err) {
          res.json(err);
