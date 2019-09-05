@@ -6,8 +6,6 @@ const router = express.Router();
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-var moment = require('moment');
-
 
 // Import model to use its database functions.
 var article = require('../models/Article.js');
