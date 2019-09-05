@@ -15,7 +15,7 @@
    {{#if comment}}
       {{#each comment}}
          <p>{{body}}</p>
-         <i>{{commenter}} | {{date}}</i> <span class="comment-delete" data-id="{{_id}}">[X]</span>
+         <i>{{commenter}} | {{date}}</i> <span class="comment-delete" data-id="{{_id}}" style="cursor: pointer"><strong>[X]</strong></span>
       {{/each}}
    {{else}}
       <p>No Comments...</p>
