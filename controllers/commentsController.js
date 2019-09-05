@@ -33,7 +33,7 @@ router.delete('/delete/:id', (req, res) => {
          _id: req.params.id
       })
       .then(() => {
-         res.deletedCount;
+         res.json('success');
       })
       .catch((err) => {
          res.json(err);
