@@ -7,7 +7,6 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 var moment = require('moment');
-moment().format('dddd, MMMM Do YYYY');
 
 
 // Import model to use its database functions.
@@ -16,13 +15,18 @@ var article = require('../models/Article.js');
 
 //* Homepage Route
 router.get('/', (req, res) => {
-   article.find({})
+   article.find({}).lean()
       // sort by date
       .sort({ date: -1 })
       // Then render to page
       .then((data) => {
+         //! disabled since id need to add it to every instance of date. have to find better way
+         // let newData = data.map((item) => {
+         //    item.date = moment(item.date).format('dddd, MMMM Do YYYY');
+         //    return item;
+         // })
          var hbsObject = {
-            articles: data
+            articles: newData
          }
          res.render('index', hbsObject);
       })
@@ -39,7 +43,6 @@ router.get('/article/:id', (req, res) => {
       .populate('comment')
       // If article is found, display it
       .then((article) => {
-         console.log(article.date);
          res.render('article', article);
       })
       .catch((err) => {
