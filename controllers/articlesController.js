@@ -15,7 +15,7 @@ var article = require('../models/Article.js');
 
 //* Homepage Route
 router.get('/', (req, res) => {
-   article.find({}).lean()
+   article.find({})
       // sort by date
       .sort({ date: -1 })
       // Then render to page
