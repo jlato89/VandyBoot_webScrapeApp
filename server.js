@@ -1,12 +1,7 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
-var moment = require('moment');
-moment().format('dddd, MMMM Do YYYY');
 require('dotenv').config();
-
-// Require all models
-// var db = require('./models');
 
 // Assign port to server
 var PORT = process.env.PORT || 8080;
@@ -29,7 +24,6 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 // Define routes
-// require('./routes/html-routes.js')(app);
 var articleRoutes = require('./controllers/articlesController.js');
 var commentRoutes = require('./controllers/commentsController.js');
 app.use(articleRoutes, commentRoutes);
