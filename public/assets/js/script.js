@@ -6,7 +6,7 @@ $('#refresh-articles').on('click', function() {
       url: '/scrape',
    })
    .then(() => {
-      window.location.href = '/';
+      location.reload();
    });
 });
 
@@ -18,11 +18,14 @@ $('#form-submit').on('click', function() {
    // Do a POST method and pass the data to the route
    $.ajax({
       method: 'POST',
-      url: '/article/'+thisId,
+      url: '/article/' + thisId,
       data: {
          body: $('#form-body').val(),
          commenter: $('#form-name').val()
       }
+   })
+   .then(() => {
+      location.reload();
    });
 });
 
@@ -34,6 +37,9 @@ $('.comment-delete').on('click', function() {
    // DO a DELETE method with the id added at the end of the url
    $.ajax({
       method: 'DELETE',
-      url: '/delete/'+thisId,
+      url: '/delete/' + thisId
+   })
+   .then(() => {
+      location.reload();
    });
 });
