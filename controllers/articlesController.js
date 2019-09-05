@@ -20,11 +20,6 @@ router.get('/', (req, res) => {
       .sort({ date: -1 })
       // Then render to page
       .then((data) => {
-         //! disabled since id need to add it to every instance of date. have to find better way
-         // let newData = data.map((item) => {
-         //    item.date = moment(item.date).format('dddd, MMMM Do YYYY');
-         //    return item;
-         // })
          var hbsObject = {
             articles: data
          }

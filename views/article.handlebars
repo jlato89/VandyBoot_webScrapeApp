@@ -2,7 +2,7 @@
 <img src="{{image}}" alt="article image">
 <p><a href="{{link}}">Link to article</a></p>
 <p>{{summary}}</p>
-<i>{{date}}</i>
+<i>{{formatDate date "dddd, MMMM Do YYYY"}}</i>
 <hr>
 <div class="comment-box">
    <form>
@@ -15,7 +15,7 @@
    {{#if comment}}
       {{#each comment}}
          <p>{{body}}</p>
-         <i>{{commenter}} | {{date}}</i> <span class="comment-delete" data-id="{{_id}}" style="cursor: pointer"><strong>[X]</strong></span>
+         <i>{{commenter}} | {{formatDate date "dddd, MMMM Do YYYY"}}</i> <span class="comment-delete" data-id="{{_id}}" style="cursor: pointer"><strong>[X]</strong></span>
       {{/each}}
    {{else}}
       <p>No Comments...</p>

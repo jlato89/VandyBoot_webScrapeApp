@@ -1,6 +1,7 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
+var moment = require('moment');
 require('dotenv').config();
 
 // Assign port to server
@@ -17,7 +18,17 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Setup Handlebars
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine(
+   'handlebars',
+   exphbs({
+      defaultLayout: 'main',
+      helpers: {
+         formatDate: function(date, format) {
+            return moment(date).format(format);
+         }
+      }
+   })
+);
 app.set("view engine", "handlebars");
 
 // Views
