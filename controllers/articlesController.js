@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
          //    return item;
          // })
          var hbsObject = {
-            articles: newData
+            articles: data
          }
          res.render('index', hbsObject);
       })
